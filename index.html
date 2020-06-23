@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src='https://unpkg.com/vue'></script>
+</head>
+<body>
+    <div id="app">
+        <div class="panel scores">
+            <div class="score">
+                <h1>Jogador</h1>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: playerLife < 20}" :style="{width: playerLife + '%'}">
+
+                    </div>
+                </div>
+                <div>{{playerLife}}%</div>
+            </div>
+            <div class="score">
+                <h1>Monstro</h1>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}">
+
+                    </div>
+                </div>
+                <div>{{monsterLife}}%</div>
+            </div>
+        </div>
+        <div v-if="hasResult" class="panel result">
+            <div v-if="monsterLife == 0" class="win">
+                <h1>Você ganhou!!</h1>
+            </div>
+            <div v-else-if="desistiu == 1" class="desistiu">
+                <h1>Você desistiu!!</h1>
+            </div>
+            <div v-else class="lose">
+                <h1>Você perdeu!!</h1>
+            </div>
+        </div>
+        <div class="panel buttons">
+            <button v-show="play" class="btn btn-danger" @click="ataque()">ATAQUE</button>
+            <button v-show="play" class="btn btn-warning" @click="especial()">ATAQUE ESPECIAL</button>
+            <button v-show="play" class="btn btn-success" @click="curar()">CURAR</button>
+            <button v-show="play" class="btn btn-info" @click="desistir()">DESISTR</button>
+            <button v-show="!play" class="btn btn-info" @click="reiniciar()">JOGAR NOVAMENTE</button>
+        </div>
+        <div class="panel logs" v-if="logs.length">
+            <ul>
+                <li v-for="log in logs" class="logs" :class="log.cls">
+                    {{log.text}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src='main.js'></script> 
+</body>
+</html>
